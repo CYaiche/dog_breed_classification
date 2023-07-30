@@ -1,0 +1,1 @@
+data_dir = "C:/dev/image_classification/data/"
