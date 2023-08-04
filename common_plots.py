@@ -32,3 +32,15 @@ def display_color_histogram(imgCV):
     plt.hist(green_color, color="green")
     plt.hist(red_color, color="red")
     plt.show()
+    
+    
+def display_images(img_list,N,M):
+    fig, axs = plt.subplots(N,M)
+    cnt = 0 
+    for i in range(N) : 
+        for j in range(M) : 
+            img = cv2.imread(img_list[cnt])
+            axs[i,j].imshow(cv2.cvtColor(img, cv2.IMREAD_ANYCOLOR))
+            axs[i,j].axis("off")
+            cnt = cnt + 1 
+    plt.show()
