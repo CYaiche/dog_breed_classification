@@ -33,41 +33,67 @@ def display_color_histogram(imgCV):
     plt.hist(red_color, color="red")
     plt.show()
     
+def plot_train_val_accuracy_and_loss(history):
+    acc      = history.history['accuracy']
+    val_acc  = history.history['val_accuracy']
+    loss     = history.history['loss']
+    val_loss = history.history['val_loss']
 
-def display_images(img_list, N, M, from_path=True, titles=None, main_title=None):
+    epochs_range = range(len(loss))
+
+    plt.figure(figsize=(10, 10))
+    plt.subplot(2, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+
+    plt.subplot(2, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    plt.show()
+
+def display_images(img_list, N, M, from_path=True, titles=None, main_title=None, correct_color=False):
     fig, axs = plt.subplots(N,M)
     cnt = 0
     for i in range(N): 
         for j in range(M):  
             img = cv2.imread(img_list[cnt]) if from_path else img_list[cnt]
+            if correct_color :
+                img = cv2.cvtColor(img, cv2.IMREAD_ANYCOLOR)
             if N !=1 : 
-                axs[i, j].imshow(cv2.cvtColor(img, cv2.IMREAD_ANYCOLOR))
+                axs[i, j].imshow(img)
                 axs[i, j].axis("off")
                 if titles != None : 
-                    axs[i, j].set_title(titles[i+j])
+                    axs[i, j].set_title(titles[cnt])
             else : 
-                axs[j].imshow(cv2.cvtColor(img, cv2.IMREAD_ANYCOLOR))
+                axs[j].imshow(img)
                 axs[j].axis("off")
                 if titles != None : 
-                    axs[j].set_title(titles[j])
+                    axs[j].set_title(titles[cnt])
             cnt = cnt + 1
     if main_title != None : 
         y0 = 0.9 if titles != None else 0.7
         fig.suptitle(main_title,y=y0)
     plt.show()
     
-def plot_img(img): 
-
+def plot_img(img, correct_color=False): 
+    if correct_color :
+        img = cv2.cvtColor(img,cv2.IMREAD_ANYCOLOR)
     plt.axis("off")
-    plt.imshow(cv2.cvtColor(img,cv2.IMREAD_ANYCOLOR))
+    plt.imshow(img)
     plt.show()
     
-def plot_img_from_path(img_path): 
+def plot_img_from_path(img_path, correct_color=False): 
     assert os.path.exists(img_path) , f"image path does not exist {img_path}"
     imgCV = cv2.imread(img_path)
-
+    if correct_color :
+        imgCV = cv2.cvtColor(imgCV,cv2.IMREAD_ANYCOLOR)
     plt.axis("off")
-    plt.imshow(cv2.cvtColor(imgCV,cv2.IMREAD_ANYCOLOR))
+    
+    plt.imshow(imgCV)
     plt.show()
     
 def plot_img_with_rectangles_from_path(img_path, reg_coor):
