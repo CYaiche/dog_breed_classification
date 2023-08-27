@@ -4,7 +4,7 @@ from common_params import model_dir
 
 TAGS = ["NB_CLASS", "NB_IMG_PER_CLASS"]
 NAME = ["experiment_name"]
-def save_experiment_mlflow(model, model_run_config, run_name, history): 
+def save_experiment_mlflow(model, model_run_config, run_name, history, fig=None): 
 
     experiment_name         =  model_run_config["experiment_name"]
 
@@ -27,10 +27,13 @@ def save_experiment_mlflow(model, model_run_config, run_name, history):
         mlflow.log_metric("val_loss", history.history["val_loss"][-1])
         mlflow.log_metric("val_acc", history.history["val_accuracy"][-1])
 
-        
+        if fig : 
+            mlflow.log_figure(fig, 'training_validation.png')
         mlflow_run_id = mlflow_run.info.run_id
         print("MLFlow Run ID: ", mlflow_run_id)
         
         # log model 
         save_dir = os.path.join(model_dir, mlflow_run_id)
         mlflow.keras.log_model(model, save_dir, keras_module='tensorflow.keras')
+        
+        return mlflow_run_id

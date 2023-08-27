@@ -16,3 +16,5 @@ DEFAULT_TEST_SPLIT = 0.1
 IMG_SIZE = 224
 input_shape = (IMG_SIZE, IMG_SIZE, 3) 
 image_size = (IMG_SIZE, IMG_SIZE)
+
+NB_AUGMENTATION = 10

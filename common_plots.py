@@ -33,7 +33,7 @@ def display_color_histogram(imgCV):
     plt.hist(red_color, color="red")
     plt.show()
     
-def plot_train_val_accuracy_and_loss(history):
+def plot_train_val_accuracy_and_loss(history, show=True):
     acc      = history.history['accuracy']
     val_acc  = history.history['val_accuracy']
     loss     = history.history['loss']
@@ -41,7 +41,7 @@ def plot_train_val_accuracy_and_loss(history):
 
     epochs_range = range(len(loss))
 
-    plt.figure(figsize=(10, 10))
+    fig = plt.figure(figsize=(10, 10))
     plt.subplot(2, 2, 1)
     plt.plot(epochs_range, acc, label='Training Accuracy')
     plt.plot(epochs_range, val_acc, label='Validation Accuracy')
@@ -53,10 +53,13 @@ def plot_train_val_accuracy_and_loss(history):
     plt.plot(epochs_range, val_loss, label='Validation Loss')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
-    plt.show()
+    if show : 
+        plt.show()
+    else :
+        return fig 
 
 def display_images(img_list, N, M, from_path=True, titles=None, main_title=None, correct_color=False):
-    fig, axs = plt.subplots(N,M)
+    fig, axs = plt.subplots(N,M, figsize=(2*M,2*N))
     cnt = 0
     for i in range(N): 
         for j in range(M):  
@@ -75,7 +78,7 @@ def display_images(img_list, N, M, from_path=True, titles=None, main_title=None,
                     axs[j].set_title(titles[cnt])
             cnt = cnt + 1
     if main_title != None : 
-        y0 = 0.9 if titles != None else 0.7
+        y0 = 1 
         fig.suptitle(main_title,y=y0)
     plt.show()
     
