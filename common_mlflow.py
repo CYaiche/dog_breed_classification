@@ -2,10 +2,22 @@ import os
 import mlflow 
 from common_params import model_dir
 
-TAGS = ["NB_CLASS", "NB_IMG_PER_CLASS"]
-NAME = ["experiment_name"]
-def save_experiment_mlflow(model, model_run_config, run_name, history, fig=None): 
 
+def save_experiment_mlflow(model, model_run_config, run_name, history, fig=None): 
+    """ log experiment with MLFLOW
+
+    Args:
+        model (keras): model object
+        model_run_config (dic): parameters to be logged
+        run_name (string): needs to be unique
+        history : output of the fit function
+        fig (optional): plots of accuracy and performances. Defaults to None.
+
+    Returns:
+        string: mlflow experiment unique id 
+    """
+    TAGS = ["NB_CLASS", "NB_IMG_PER_CLASS"]
+    NAME = ["experiment_name"]
     experiment_name         =  model_run_config["experiment_name"]
 
     # Set the experiment name and create an MLflow run
@@ -36,4 +48,4 @@ def save_experiment_mlflow(model, model_run_config, run_name, history, fig=None)
         save_dir = os.path.join(model_dir, mlflow_run_id)
         mlflow.keras.log_model(model, save_dir, keras_module='tensorflow.keras')
         
-        return mlflow_run_id
+    return mlflow_run_id
