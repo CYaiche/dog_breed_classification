@@ -1,6 +1,6 @@
 import os 
 import mlflow 
-from common_params import model_dir
+from common.common_params import model_dir
 
 
 def save_experiment_mlflow(model, model_run_config, run_name, history, fig=None): 
