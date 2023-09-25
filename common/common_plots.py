@@ -59,7 +59,7 @@ def plot_train_val_accuracy_and_loss(history, show=True):
         return fig 
 
 def display_images(img_list, N, M, from_path=True, titles=None, main_title=None, correct_color=False):
-    fig, axs = plt.subplots(N,M, figsize=(2*M,2*N))
+    fig, axs = plt.subplots(N,M, figsize=(3*M,3*N))
     cnt = 0
     for i in range(N): 
         for j in range(M):  
